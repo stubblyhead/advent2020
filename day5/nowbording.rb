@@ -13,7 +13,7 @@ passes.each do |i|
 end
 
 puts id_list.max
-id_list.sort
+id_list.sort!
 id_list.each_index do |i|
   if id_list[i+1] - id_list[i] == 2
     puts id_list[i] + 1

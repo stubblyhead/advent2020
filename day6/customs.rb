@@ -15,7 +15,6 @@ answers.each do |i|
   yes_questions = i.gsub("\n",'').split('').uniq #get list of answers with at least one yes
   yes_questions.each do |a|
     if i.count(a) == groupsize #increment count if the yes answer appears as many times as the group is large
-      all_yes += a
       count += 1
     end
   end

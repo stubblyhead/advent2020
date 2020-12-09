@@ -1,7 +1,3 @@
-require 'pry'
-
-binding.pry
-
 class Node
   attr_reader :parents, :children, :child_counts, :name
 
@@ -30,7 +26,6 @@ end
 #   end
 # end
 
-
 bags = File.readlines('./input', :chomp => true)
 graph = {}
 bags.each do |i|
@@ -47,10 +42,15 @@ bags.each do |i|
 end
 
 valid_bags = []
-valid_bags += graph['shiny gold'].parents
-valid_bags.each do |i|
-  valid_bags += graph[i].parents
-end
-puts valid_bags.uniq.length
+bag_count = 0
 
-puts valid_bags
+valid_bags += graph['shiny gold'].parents
+while true  #I feel like I should only need to do this once but oh well
+  valid_bags.each do |i|
+    valid_bags += graph[i].parents
+  end
+  valid_bags.uniq.length == bag_count ? break : bag_count = valid_bags.uniq.length
+end
+
+
+puts bag_count

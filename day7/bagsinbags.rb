@@ -39,7 +39,7 @@ bags.each do |i|
   next if inner == 'no other bags.'
   contents = inner.split(/ bag[s]?[,|.]/ )
   contents.each do |i|
-    (count, foo, color) = i.partition(' ')
+    (count, foo, color) = i.strip.partition(' ')
     graph[color] = Node.new(color) unless graph[color]
     graph[outer].add_child(color, count.to_i)
     graph[color].add_parent(outer)

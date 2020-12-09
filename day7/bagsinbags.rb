@@ -1,3 +1,7 @@
+require 'pry'
+
+binding.pry
+
 class Node
   attr_reader :parents, :children, :child_counts, :name
 
@@ -36,7 +40,7 @@ bags.each do |i|
   contents = inner.split(/ bag[s]?[,|.]/ )
   contents.each do |i|
     (count, foo, color) = i.partition(' ')
-    graph[color] = Node.new(color)
+    graph[color] = Node.new(color) unless graph[color]
     graph[outer].add_child(color, count.to_i)
     graph[color].add_parent(outer)
   end
@@ -48,3 +52,5 @@ valid_bags.each do |i|
   valid_bags += graph[i].parents
 end
 puts valid_bags.uniq.length
+
+puts valid_bags

@@ -22,7 +22,7 @@ class WaitingRoom
       next if i == -1 or i == @grid.length #skip as needed on first and last rows
       [col-1..col+1].each do |j|  #iterate from preceding col to next col
         next if col == -1 or col == @grid[row].length  #skip as needed on first and last cols
-        adj += 1 if @grid[row][col] == '#'
+        adj += 1 if @grid[i][j] == '#'
       end
     end
     return adj
@@ -39,7 +39,7 @@ class WaitingRoom
     end
     to_change.each do |i|
       (row,col) = i
-      @grid[row][col] == '#'
+      @grid[row][col] = '#'
     end
     return to_change.length  #return the number of seats whose state changed
   end
@@ -55,7 +55,7 @@ class WaitingRoom
     end
     to_change.each do |i|
       (row,col) = i
-      @grid[row][col] == 'L'
+      @grid[row][col] = 'L'
     end
     return to_change.length  #return number of seats whose state changed
   end

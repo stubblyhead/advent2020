@@ -1,6 +1,4 @@
 #RIP john conway
-require 'pry'
-binding.pry
 
 class WaitingRoom
 
@@ -18,11 +16,11 @@ class WaitingRoom
 
   def count_adjacent(row,col)
     adj = 0
-    [row-1..row+1].each do |i|  #iterate from preceding row to next row
+    (row-1..row+1).each do |i|  #iterate from preceding row to next row
       next if i == -1 or i == @grid.length #skip as needed on first and last rows
-      [col-1..col+1].each do |j|  #iterate from preceding col to next col
-        next if col == -1 or col == @grid[row].length  #skip as needed on first and last cols
-        adj += 1 if @grid[i][j] == '#'
+      (col-1..col+1).each do |j|  #iterate from preceding col to next col
+        next if j == -1 or j == @grid[row].length  #skip as needed on first and last cols
+        adj += 1 if @grid[i][j] == '#' unless i == row and j == col #seats are not adjacent to themselves
       end
     end
     return adj

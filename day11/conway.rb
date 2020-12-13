@@ -1,4 +1,6 @@
 #RIP john conway
+require 'pry'
+binding.pry
 
 class WaitingRoom
 
@@ -11,6 +13,7 @@ class WaitingRoom
     @grid.each do |row|
       seated += row.count('#')
     end
+    return seated
   end
 
   def count_adjacent(row,col)

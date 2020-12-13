@@ -59,7 +59,7 @@ class WaitingRoom
   end
 end
 
-seats = File.readlines('./testcase', :chomp => true).map { |i| i.split('') }
+seats = File.readlines('./input', :chomp => true).map { |i| i.split('') }
 room = WaitingRoom.new(seats)
 while true
   change = room.sit

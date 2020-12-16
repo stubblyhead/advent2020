@@ -1,5 +1,6 @@
 #RIP john conway
 
+
 class WaitingRoom
 
   def initialize(grid)
@@ -35,6 +36,7 @@ class WaitingRoom
         adj += 1
         break
       end
+      break if @grid[look_row][look_col] == 'L' #only the first visible seat counts
     end
 
     look_row = row
@@ -44,6 +46,7 @@ class WaitingRoom
         adj += 1
         break
       end
+      break if @grid[look_row][look_col] == 'L'
     end
 
     look_row = row
@@ -53,6 +56,7 @@ class WaitingRoom
         adj += 1
         break
       end
+      break if @grid[look_row][look_col] == 'L'
     end
 
     look_col = col
@@ -62,6 +66,7 @@ class WaitingRoom
         adj += 1
         break
       end
+      break if @grid[look_row][look_col] == 'L'
     end
 
     look_col = col
@@ -72,6 +77,7 @@ class WaitingRoom
         adj += 1
         break
       end
+      break if @grid[look_row][look_col] == 'L'
     end
 
     look_row,look_col = [row,col]
@@ -82,6 +88,7 @@ class WaitingRoom
         adj += 1
         break
       end
+      break if @grid[look_row][look_col] == 'L'
     end
 
     look_row, look_col = [row,col]
@@ -92,6 +99,7 @@ class WaitingRoom
         adj += 1
         break
       end
+      break if @grid[look_row][look_col] == 'L'
     end
 
     look_row, look_col = [row,col]
@@ -102,6 +110,7 @@ class WaitingRoom
         adj += 1
         break
       end
+      break if @grid[look_row][look_col] == 'L'
     end
     return adj
   end
@@ -163,7 +172,9 @@ while true
   end
 end
 
+seats = File.readlines('./testcase', :chomp => true).map { |i| i.split('') }
 room = WaitingRoom.new(seats)
+puts seats[0]
 while true
   change = room.sit(look = true)
   if change == 0

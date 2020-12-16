@@ -28,7 +28,7 @@ class WaitingRoom
 
   def count_visible(row,col)
     adj = 0
-    (look_row,look_col) = (row,col)  #need to manipulate col and row, but also keep track of what seat we're starting from.  there's probably a better way to do this
+    look_row,look_col = [row,col]  #need to manipulate col and row, but also keep track of what seat we're starting from.  there's probably a better way to do this
     until look_row == 0 #looking north
       look_row -= 1
       if @grid[look_row][look_col] == '#'
@@ -74,7 +74,7 @@ class WaitingRoom
       end
     end
 
-    (look_row,look_col) = (row,col)
+    look_row,look_col = [row,col]
     until look_row == @grid.length - 1 or look_col == @grid[row].length - 1 #looking southeast
       look_row += 1
       look_col += 1
@@ -84,7 +84,7 @@ class WaitingRoom
       end
     end
 
-    (look_row, look_col) = (row,col)
+    look_row, look_col = [row,col]
     until look_row == 0 or look_col == @grid[row].length - 1 #looking northeast
       look_row -= 1
       look_col += 1
@@ -94,7 +94,7 @@ class WaitingRoom
       end
     end
 
-    (look_row, look_col) = (row, col)
+    look_row, look_col = [row,col]
     until look_row == @grid.length - 1 or look_col == 0 #looking southwest
       look_row += 1
       look_col -= 1
@@ -107,7 +107,7 @@ class WaitingRoom
   end
 
   def sit(look = false)
-    look ? func = count_visible : func = count_adjacent #set which function to call later based on input parm
+    look ? func = "count_visible" : func = "count_adjacent" #set which function to call later based on input parm
     to_change = [] #can't change as we go, need to check every seat first then change
     @grid.each_index do |row|
       @grid[row].each_index do |col|
@@ -124,12 +124,18 @@ class WaitingRoom
   end
 
   def stand(look = false)
-    look ? func = count_visible : func = count_adjacent
+    if look
+      func = "count_visible"
+      tolerance = 5
+    else
+      func = "count_adjacent"
+      tolerance = 4
+    end
     to_change = []
     @grid.each_index do |row|
       @grid[row].each_index do |col|
         if @grid[row][col] == '#'
-          to_change.push([row,col]) if self.send(func,row,col) >= 4 #add to change list if four or more adjacent seats are occupied
+          to_change.push([row,col]) if self.send(func,row,col) >= tolerance #add to change list if four or more adjacent seats are occupied
         end
       end
     end
@@ -141,7 +147,7 @@ class WaitingRoom
   end
 end
 
-seats = File.readlines('./input', :chomp => true).map { |i| i.split('') }
+seats = File.readlines('./testcase', :chomp => true).map { |i| i.split('') }
 room = WaitingRoom.new(seats)
 while true
   change = room.sit
@@ -151,6 +157,21 @@ while true
   end
 
   change = room.stand
+  if change == 0
+    puts room.count_seated
+    break
+  end
+end
+
+room = WaitingRoom.new(seats)
+while true
+  change = room.sit(look = true)
+  if change == 0
+    puts room.count_seated
+    break
+  end
+
+  change = room.stand(look = true)
   if change == 0
     puts room.count_seated
     break

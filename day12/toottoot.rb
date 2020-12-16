@@ -42,7 +42,7 @@ class Boat
   end
 end
 
-moves = File.readlines('./testcase', :chomp => true)
+moves = File.readlines('./input', :chomp => true)
 
 lollipop = Boat.new
 moves.each do |i|

@@ -172,9 +172,8 @@ while true
   end
 end
 
-seats = File.readlines('./testcase', :chomp => true).map { |i| i.split('') }
+seats = File.readlines('./input', :chomp => true).map { |i| i.split('') }
 room = WaitingRoom.new(seats)
-puts seats[0]
 while true
   change = room.sit(look = true)
   if change == 0

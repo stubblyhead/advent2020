@@ -26,12 +26,93 @@ class WaitingRoom
     return adj
   end
 
-  def sit
+  def count_visible(row,col)
+    adj = 0
+    (look_row,look_col) = (row,col)  #need to manipulate col and row, but also keep track of what seat we're starting from.  there's probably a better way to do this
+    until look_row == 0 #looking north
+      look_row -= 1
+      if @grid[look_row][look_col] == '#'
+        adj += 1
+        break
+      end
+    end
+
+    look_row = row
+    until look_row == @grid.length - 1 #looking south
+      look_row += 1
+      if @grid[look_row][look_col] == '#'
+        adj += 1
+        break
+      end
+    end
+
+    look_row = row
+    until look_col == 0 #looking west
+      look_col -= 1
+      if @grid[look_row][look_col] == '#'
+        adj += 1
+        break
+      end
+    end
+
+    look_col = col
+    until look_col == @grid[row].length - 1 #looking east
+      look_col += 1
+      if @grid[look_row][look_col] == '#'
+        adj += 1
+        break
+      end
+    end
+
+    look_col = col
+    until look_row == 0 or look_col == 0 #looking northwest
+      look_row -= 1
+      look_col -= 1
+      if @grid[look_row][look_col] == '#'
+        adj += 1
+        break
+      end
+    end
+
+    (look_row,look_col) = (row,col)
+    until look_row == @grid.length - 1 or look_col == @grid[row].length - 1 #looking southeast
+      look_row += 1
+      look_col += 1
+      if @grid[look_row][look_col] == '#'
+        adj += 1
+        break
+      end
+    end
+
+    (look_row, look_col) = (row,col)
+    until look_row == 0 or look_col == @grid[row].length - 1 #looking northeast
+      look_row -= 1
+      look_col += 1
+      if @grid[look_row][look_col] == '#'
+        adj += 1
+        break
+      end
+    end
+
+    (look_row, look_col) = (row, col)
+    until look_row == @grid.length - 1 or look_col == 0 #looking southwest
+      look_row += 1
+      look_col -= 1
+      if @grid[look_row][look_col] == '#'
+        adj += 1
+        break
+      end
+    end
+    return adj
+  end
+
+  def sit(look = false)
+    look ? func = count_visible : func = count_adjacent #set which function to call later based on input parm
     to_change = [] #can't change as we go, need to check every seat first then change
     @grid.each_index do |row|
       @grid[row].each_index do |col|
         if @grid[row][col] == 'L'
-          to_change.push([row,col]) if count_adjacent(row,col) == 0 #add to the change list if all adjacent seats are empty
+          to_change.push([row,col]) if self.send(func,row,col) == 0 #add to the change list if all adjacent seats are empty
         end
       end
     end
@@ -42,12 +123,13 @@ class WaitingRoom
     return to_change.length  #return the number of seats whose state changed
   end
 
-  def stand
+  def stand(look = false)
+    look ? func = count_visible : func = count_adjacent
     to_change = []
     @grid.each_index do |row|
       @grid[row].each_index do |col|
         if @grid[row][col] == '#'
-          to_change.push([row,col]) if count_adjacent(row,col) >= 4 #add to change list if four or more adjacent seats are occupied
+          to_change.push([row,col]) if self.send(func,row,col) >= 4 #add to change list if four or more adjacent seats are occupied
         end
       end
     end

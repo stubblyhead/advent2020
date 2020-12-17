@@ -1,3 +1,6 @@
+require 'pry'
+binding.pry
+
 class Boat
   attr_reader :lat, :long, :heading
 

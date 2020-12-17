@@ -42,7 +42,7 @@ class Boat
   end
 end
 
-moves = File.readlines('./testcase', :chomp => true)
+moves = File.readlines('./input', :chomp => true)
 
 lollipop = Boat.new
 moves.each do |i|
@@ -66,11 +66,11 @@ class Boat2 < Boat
   def normalize(dir, deg)
     deg %= 360
     if deg == 270
-      deg == 90
+      deg = 90
       if dir == 'R'
-        dir == 'L'
+        dir = 'L'
       elsif dir == 'L'
-        dir == 'R'
+        dir = 'R'
       end
     end
     return [dir, deg]

@@ -1,6 +1,3 @@
-require 'pry'
-binding.pry
-
 class Boat
   attr_reader :lat, :long, :heading
 
@@ -84,12 +81,12 @@ class Boat2 < Boat
     if deg == 180  #negate both x and y
       @wp_lat = -@wp_lat
       @wp_long = -@wp_long
-    elsif 'dir' == 'R' #swap x and y, negate y
+    elsif dir == 'R' #swap x and y, negate y
       tmp = @wp_lat
       @wp_lat = @wp_long
       @wp_long = tmp
       @wp_lat = -@wp_lat
-    elsif 'dir' == 'L' #swap x and y, negate x
+    elsif dir == 'L' #swap x and y, negate x
       tmp = @wp_lat
       @wp_lat = @wp_long
       @wp_long = tmp

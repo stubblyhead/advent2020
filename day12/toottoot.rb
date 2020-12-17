@@ -113,13 +113,13 @@ class Boat2 < Boat
 end
 
 kobayashi_maru = Boat2.new
-move.each do |i|
+moves.each do |i|
   action = i[0]
   val = i[1..].to_i
   if action == 'R' or action == 'L'
-    lollipop.turn(action, val)
+    kobayashi_maru.turn(action, val)
   else
-    lollipop.move(action, val)
+    kobayashi_maru.move(action, val)
   end
 end
 

@@ -1,4 +1,4 @@
-lines = File.readlines('./testcase', :chomp => true)
+lines = File.readlines('./input', :chomp => true)
 time = lines[0].to_f #making this a float will make the calculations later more convenient
 routes = lines[1].split(',').map { |i| i.to_i }
 

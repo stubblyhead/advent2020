@@ -1,4 +1,4 @@
-lines = File.readlines('./testcase', :chomp => true)
+lines = File.readlines('./input ', :chomp => true)
 
 mask = ''
 mem = []
@@ -23,5 +23,5 @@ end
 
 sum = 0
 mem.each { |i| sum += i if i}
-p mem
+
 puts sum

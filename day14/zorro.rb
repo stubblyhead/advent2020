@@ -1,6 +1,3 @@
-require 'pry'
-binding.pry
-
 lines = File.readlines('./testcase2', :chomp => true)
 
 mask = ''
@@ -28,6 +25,7 @@ sum = 0
 mem.each { |i| sum += i if i}
 puts sum
 
+mem = []
 def calculate_addresses(mem_mask)
   x_loc = []
   addr_list = []
@@ -55,16 +53,6 @@ lines.each do |i|
     addr = addr.to_s(2).rjust(mask.length, '0')
     val = parts[2].to_i
     mask_bits.each_index { |i| addr[i] = 'X' if mask_bits[i] == 'X' }
-    # mask_bits.each_index do |i|
-    #   case mask_bits[i]
-    #   when 'X'
-    #     addr[i] = 'X'
-    #   when '1'
-    #     addr[i] = (addr[i].to_i | 1).to_s
-    #   when '0'
-    #     addr[i] = (addr[i].to_i & 0).to_s
-    #   end
-    # end
     addr_list = calculate_addresses(addr)
     addr_list.each { |i| mem[i.to_i] = val }
   end

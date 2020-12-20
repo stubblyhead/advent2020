@@ -1,3 +1,6 @@
+require 'pry'
+binding.pry
+
 lines = File.readlines('./input ', :chomp => true)
 
 mask = ''
@@ -23,5 +26,18 @@ end
 
 sum = 0
 mem.each { |i| sum += i if i}
-
 puts sum
+
+def build_masks(mem_mask)
+  x_loc = []
+  mask_list = []
+  mem_mask.split('').each_index { |i| x_loc.push(i) if mem_mask[i] == 'X' }
+  (2**x_loc.length).times do |i|
+    this_mask = mem_mask.clone
+    x_loc.length.times do |j|
+      i[j] == 1 ? this_mask[x_loc[j]] = '1' : this_mask[x_loc[j]] = '0'
+    end
+    mask_list.push(this_mask.to_i(2))
+  end
+  return mask_list
+end

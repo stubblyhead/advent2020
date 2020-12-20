@@ -1,4 +1,4 @@
-sequence = [0,3,6] #initial sequence
+sequence = [0,1,5,10,3,12,19] #initial sequence
 seen = {} #hash to keep track of how long ago a number was last seen
 sequence.each do |i|
   seen.keys.each { |j| seen[j] += 1 }

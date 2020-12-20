@@ -1,4 +1,4 @@
-lines = File.readlines('./testcase2', :chomp => true)
+lines = File.readlines('./input', :chomp => true)
 
 mask = ''
 mem = []
@@ -25,7 +25,7 @@ sum = 0
 mem.each { |i| sum += i if i}
 puts sum
 
-mem = []
+mem = {} #memory addresses are too big for an array in this part, probably should have use a hash in part 1 also
 def calculate_addresses(mem_mask)
   x_loc = []
   addr_list = []
@@ -52,12 +52,10 @@ lines.each do |i|
     addr = addr | on_mask
     addr = addr.to_s(2).rjust(mask.length, '0')
     val = parts[2].to_i
-    mask_bits.each_index { |i| addr[i] = 'X' if mask_bits[i] == 'X' }
+    mask_bits.each_index { |j| addr[j] = 'X' if mask_bits[j] == 'X' }
     addr_list = calculate_addresses(addr)
-    addr_list.each { |i| mem[i.to_i] = val }
+    addr_list.each { |j| mem[j.to_i] = val }
   end
 end
 
-sum = 0
-mem.each { |i| sum += i if i }
-puts sum
+puts mem.values.sum

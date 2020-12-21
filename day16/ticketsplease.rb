@@ -1,3 +1,6 @@
+require 'pry'
+binding.pry
+
 lines = File.readlines('./testcase', sep = "\n\n", :chomp => true)
 
 rules = {}
@@ -21,8 +24,9 @@ other_tickets = lines[2].split("\n")[1..].map{|i| i.split(',').map { |j| j.to_i 
 
 def valid(rules, ticket)
   #returns 0 if ticket is valid, otherwise returns field that doesn't satisfy any rules
-  valid_fields = Hash.new { |hash,key| hash[key] = [] }
+  valid_fields = {} 
   ticket.each do |val|
+    valid_fields[val] = []
     rules.each_key do |key|
       rules[key].each do |r|
         valid_fields[val].push(key) if r.cover?(val)
@@ -30,11 +34,9 @@ def valid(rules, ticket)
     end
   end
   bad_vals = valid_fields.select { |k,v| v == [] }
-  if bad_vals == []
+  if bad_vals.keys == []
     return 0
   else
-    return bad_vals[0]
+    return bad_vals.keys[0]
   end
 end
-
-puts valid(rules, my_ticket)

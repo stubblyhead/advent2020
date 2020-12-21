@@ -16,4 +16,8 @@ lines[0].each_line do |i|
   end
 end
 
-puts rules
+my_ticket = lines[1].split("\n")[1].split(',').map { |i| i.to_i }
+other_tickets = lines[2].split("\n")[1..].map{|i| i.split(',').map { |j| j.to_i } }
+
+p my_ticket
+p other_tickets

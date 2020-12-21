@@ -1,6 +1,3 @@
-require 'pry'
-binding.pry
-
 lines = File.readlines('./testcase', sep = "\n\n", :chomp => true)
 
 rules = {}
@@ -24,7 +21,7 @@ other_tickets = lines[2].split("\n")[1..].map{|i| i.split(',').map { |j| j.to_i 
 
 def valid(rules, ticket)
   #returns 0 if ticket is valid, otherwise returns field that doesn't satisfy any rules
-  valid_fields = {} 
+  valid_fields = {}
   ticket.each do |val|
     valid_fields[val] = []
     rules.each_key do |key|
@@ -40,3 +37,9 @@ def valid(rules, ticket)
     return bad_vals.keys[0]
   end
 end
+
+bad_sum = 0
+
+other_tickets.each { |i| bad_sum += valid(rules, i) }
+
+puts bad_sum

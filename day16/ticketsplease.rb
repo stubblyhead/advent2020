@@ -25,10 +25,16 @@ def valid(rules, ticket)
   ticket.each do |val|
     rules.each_key do |key|
       rules[key].each do |r|
-        valid_fields(val).push(key) if r.covers?(val)
+        valid_fields[val].push(key) if r.cover?(val)
       end
     end
   end
   bad_vals = valid_fields.select { |k,v| v == [] }
-  bad_vals == [] ? return 0 : return[0]
+  if bad_vals == []
+    return 0
+  else
+    return bad_vals[0]
+  end
 end
+
+puts valid(rules, my_ticket)

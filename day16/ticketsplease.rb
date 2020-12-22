@@ -1,4 +1,7 @@
-lines = File.readlines('./testcase', sep = "\n\n", :chomp => true)
+require 'pry'
+binding.pry
+
+lines = File.readlines('./input', sep = "\n\n", :chomp => true)
 
 rules = {}
 
@@ -39,7 +42,11 @@ def valid(rules, ticket)
 end
 
 bad_sum = 0
-
-other_tickets.each { |i| bad_sum += valid(rules, i) }
+good_tickets = [my_ticket]
+other_tickets.each do |i| 
+  bad_rule = valid(rules, i)
+  bad_rule == 0 ? good_tickets.push(i) : bad_sum += bad_rule
+end
 
 puts bad_sum
+puts good_tickets.length
